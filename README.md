@@ -1,106 +1,246 @@
-# E-mail-Automation
-Hackathon Data Scraper & Email Automation System
+# Hackathon Discovery & Notification Platform
 
+A Python-based automation platform that discovers hackathon opportunities from online platforms, stores structured data in Excel, and sends automated email notifications using n8n Email Node.
 
-Project Overview
+This project helps students stay updated with hackathons without manually searching multiple websites.
 
-  This project is designed to automatically collect hackathon information from various online platforms and organize the data in a structured format. The goal is to help students and developers stay updated with upcoming hackathons without manually searching multiple websites.
-The system scrapes hackathon details, stores them in a dataset, and prepares the data for automated email notifications.
+---
 
+## Demo
 
-Project Goal
+### Current Status
 
-   The main objective of this project is to build an AI-powered hackathon notification system that automatically discovers hackathons and notifies interested users through email.
+- Devpost hackathon scraping completed
+- Unstop hackathon scraping completed
+- Hackathon data stored in Excel
+- Automated workflow execution using Python scripts
+- Email notification delivery handled through n8n Email Node
+- Queue-based worker logic included for automation flow
 
-Phase 1 – Data Scraping (Current Stage)
+---
 
-   In the first phase of this project, the focus is on web scraping and data collection.
+## Key Features
 
-   The system automatically extracts hackathon details such as:
+- Scrapes hackathon details from Devpost and Unstop
+- Extracts structured information such as title, deadline, platform, and application link
+- Stores collected hackathon data in Excel format
+- Supports automated workflow execution through worker scripts
+- Sends email notifications using n8n Email Node
+- Designed to reduce manual hackathon searching for students
+- Modular code structure for adding more platforms in the future
 
-   Hackathon Name
+---
 
-   Platform / Source Website
+## Architecture Diagram
 
-   Registration Deadline
+![Architecture](docs/architecture.png)
 
-   Event Date
+---
 
-   Hackathon Link
+## Workflow Diagram
 
-The collected data is stored in a structured format for further automation and processing.
+![Workflow](docs/workflow.png)
 
-Technologies Used
+---
 
-   Python
+## Project Overview
 
-   Playwright (Web Scraping)
+Students often miss hackathon opportunities because details are spread across multiple platforms. This project automates the discovery and notification process.
 
-   Pandas / Excel Processing
+The system scrapes hackathon listings from platforms such as Devpost and Unstop, processes the collected data, stores it in an Excel file, and uses n8n to send automated email notifications.
 
-   AWS Ubuntu Server
+---
 
-   Cron Jobs (Scheduling)
+## Problem Statement
 
-Project Structure
-AI-Agent/
+Manually searching for hackathons across different platforms is time-consuming and inefficient. Students may miss deadlines because there is no centralized notification system.
+
+This project solves the problem by creating an automated pipeline that:
+
+1. Collects hackathon details from online platforms
+2. Converts unstructured web data into structured Excel data
+3. Sends automated email notifications through n8n
+4. Helps students discover opportunities faster
+
+---
+
+## Tech Stack
+
+### Programming Language
+
+- Python
+
+### Web Scraping
+
+- Playwright
+- Requests / Browser Automation Logic
+
+### Data Storage
+
+- Excel
+
+### Automation
+
+- n8n
+- n8n Email Node
+- Worker-based processing
+
+### Tools
+
+- Git
+- GitHub
+- VS Code
+- Linux
+
+---
+
+## Project Structure
+
+```text
+E-mail-Automation/
 │
-├── data/
-│   └── hackathons_master.xlsx
-│
-├── scraper/
-│   ├── devpost.py
-│   └── unstop.py
-│
-├── utils/
-│   └── helper functions
-│
+├── devpost.py
+├── unstop.py
+├── excel_writer.py
 ├── run_all.py
+├── worker.py
 │
-└── venv/
-How the System Works
+├── docs/
+│   ├── architecture.png
+│   └── workflow.png
+│
+├── requirements.txt
+├── LICENSE
+├── .gitignore
+└── README.md
+```
 
-The scraper collects hackathon information from supported platforms.
+---
 
-Extracted data is processed and cleaned.
+## How It Works
 
-The data is saved in a master dataset.
+1. `devpost.py` scrapes hackathon details from Devpost.
+2. `unstop.py` scrapes hackathon details from Unstop.
+3. Extracted data is cleaned and converted into a structured format.
+4. `excel_writer.py` stores the final hackathon data in an Excel file.
+5. `worker.py` supports automated processing logic.
+6. n8n reads or receives the processed hackathon data.
+7. n8n Email Node sends automated email notifications to students.
 
-The script can run automatically using scheduled tasks.
+---
 
-This creates a continuously updated dataset of hackathons.
+## Data Fields
 
-Future Development (Phase 2)
+The Excel file can contain fields such as:
 
-The next phase of this project will focus on automation and notification delivery.
+| Field | Description |
+|---|---|
+| Title | Name of the hackathon |
+| Platform | Source platform such as Devpost or Unstop |
+| Deadline | Last date to apply |
+| Apply Link | Registration or application URL |
+| Date Added | Date when the opportunity was collected |
+| Status | Notification or processing status |
 
-Planned features include:
+---
 
-  Integrating n8n automation workflows
+## Installation
 
-  Automatically sending hackathon updates through email notifications
+### 1. Clone the Repository
 
-  Connecting Google Sheets as a dynamic database
+```bash
+git clone https://github.com/VishwaSabaris/E-mail-Automation.git
+cd E-mail-Automation
+```
 
-  Scheduling automated workflows
+### 2. Create Virtual Environment
 
-  Building an AI-based filtering system to recommend relevant hackathons
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
 
-  The final goal is to create a fully automated hackathon discovery and notification system.
+### 3. Install Dependencies
 
-Planned Architecture
-Web Scrapers
-     ↓
-Data Processing
-     ↓
-Google Sheets Database
-     ↓
-n8n Automation
-     ↓
-Email Notification System
-Why This Project
+```bash
+pip install -r requirements.txt
+playwright install
+```
 
-Students often miss hackathons because information is scattered across multiple platforms. This system aims to solve that problem by automatically discovering and sharing hackathon opportunities.
+---
 
-Author
-Vishwa Sabaris V
+## Usage
+
+Run the complete automation pipeline:
+
+```bash
+python run_all.py
+```
+
+Run individual scrapers:
+
+```bash
+python devpost.py
+python unstop.py
+```
+
+The generated Excel file can then be used in the n8n workflow to send email notifications.
+
+---
+
+## n8n Email Workflow
+
+The email notification part is handled using n8n Email Node.
+
+### Workflow Logic
+
+```text
+Excel Hackathon Data
+      ↓
+n8n Workflow
+      ↓
+Read / Process Hackathon Records
+      ↓
+Email Node
+      ↓
+Send Notification to Students
+```
+
+---
+
+## Future Improvements
+
+- Google Sheets integration
+- Duplicate hackathon detection
+- Deadline-based filtering
+- Email personalization
+- Web dashboard for viewing opportunities
+- Database storage using SQLite or PostgreSQL
+- Scheduled scraping using cron or GitHub Actions
+- Multi-platform support beyond Devpost and Unstop
+- Deployment on cloud server
+
+---
+
+## Learning Outcomes
+
+Through this project, I gained practical experience in:
+
+- Web scraping
+- Browser automation
+- Data extraction and cleaning
+- Excel automation
+- Workflow automation using n8n
+- Email automation
+- Python scripting
+- Modular project design
+
+---
+
+## Author
+
+**Vishwa Sabaris V**
+
+B.E. Computer Science and Engineering (Artificial Intelligence & Machine Learning)
+
+Kalaignar Karunanidhi Institute of Technology (KIT), Coimbatore

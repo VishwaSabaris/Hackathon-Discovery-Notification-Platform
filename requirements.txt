@@ -1,0 +1,17 @@
+# Web scraping and browser automation
+playwright==1.47.0
+beautifulsoup4==4.12.3
+requests==2.32.3
+
+# Data processing and Excel support
+pandas==2.2.3
+openpyxl==3.1.5
+
+# Environment variables
+python-dotenv==1.0.1
+
+# Optional backend/API support if webhook or Flask integration is added
+Flask==3.0.3
+
+# Testing
+pytest==8.3.3
